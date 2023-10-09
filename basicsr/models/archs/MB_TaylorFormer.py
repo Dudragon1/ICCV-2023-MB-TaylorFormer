@@ -732,7 +732,9 @@ class MB_TaylorFormer(nn.Module):
         super(MB_TaylorFormer, self).__init__()
 
         self.patch_embed = OverlapPatchEmbed(inp_channels, dim[0])
+        # 第一个3*3卷积层，形状变为[3,H,W]-->[24,H,W]
         self.patch_embed_encoder_level1 = Patch_Embed_stage(dim[0], dim[0], num_path=num_path[0], isPool=False,offset_clamp=offset_clamp)
+        # level1的Multi-scale Patch Embeding层
         self.encoder_level1 = MHCA_stage(dim[0], dim[0], num_layers=num_blocks[0], num_heads=heads[0],
                                          ffn_expansion_factor=2.66, num_path=num_path[0],
                                          bias=False, LayerNorm_type='BiasFree',qk_norm=qk_norm)
